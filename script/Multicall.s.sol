@@ -14,7 +14,9 @@ contract MulticallScript is Script {
 
         vm.startBroadcast(pk);
         Multicall impl = new Multicall();
-        mc = Multicall(payable(address(new ERC1967Proxy(address(impl), abi.encodeCall(Multicall.initialize, (deployer))))));
+        mc = Multicall(
+            payable(address(new ERC1967Proxy(address(impl), abi.encodeCall(Multicall.initialize, (deployer)))))
+        );
         if (admins.length > 0) {
             bool[] memory actives = new bool[](admins.length);
             for (uint256 i = 0; i < admins.length; i++) {
